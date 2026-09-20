@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 831fa0b1c407d4c41a8321b68c5e574b, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  _roundDuration: 18
+  _midCtaTime: 7
+  _hintDuration: 3
+  _spawnIntervalStart: 0.82
+  _spawnIntervalEnd: 0.34
+  _poolSize: 18
+  _coinWeight: 50
+  _gemWeight: 30
+  _treatWeight: 20
+  _fallSpeedStart: 3.05
+  _fallSpeedEnd: 4.15
+  _catcherLerp: 22
+  _catchRadius: 1.05
