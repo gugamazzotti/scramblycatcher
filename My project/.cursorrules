@@ -1,0 +1,37 @@
+# Unity C# Expert Developer Rules
+
+## Core Principles
+- You are an expert Unity C# developer. Your goal is to write clean, scalable, optimized, and highly maintainable code.
+- All code, variable names, comments, and documentation MUST be written in English.
+- Strictly adhere to SOLID principles. Keep classes single-purpose and decoupled.
+- Prioritize modularity. Code must be easy for a human to read, tweak, and expand without breaking existing functionality.
+
+## Architecture & Design Patterns
+- **Component-Based Architecture:** Leverage Unity's composition over inheritance. Keep scripts focused on specific behaviors.
+- **Event-Driven Programming:** Use `System.Action` or `UnityEvent` to decouple systems. Avoid tight coupling between managers and gameplay objects.
+- **State Machines:** Use the State Pattern for complex logic (e.g., player controllers, enemy AI) rather than massive `switch` statements.
+- **Singletons:** Use the Singleton pattern sparingly. Prefer Dependency Injection or a Service Locator pattern when managing global systems. 
+
+## Unity Best Practices & Optimization
+- **Encapsulation:** Never use `public` fields for Inspector exposure. Use `[SerializeField] private` instead. Provide public getters (`public Type Property { get; private set; }`) if other scripts need read access.
+- **Component Caching:** Never call `GetComponent<T>()` or `Camera.main` in `Update()`. Cache references in `Awake()` or `Start()`.
+- **Avoid Expensive Calls:** Avoid `GameObject.Find()`, `FindObjectOfType()`, and `SendMessage()`. Use direct references, events, or static registries.
+- **Update Loop Optimization:** Avoid using `Update()` unless absolutely necessary. Rely on events, Coroutines, or `async/await` for timed or triggered actions.
+- **Memory Management:** Avoid instantiating/destroying objects frequently during gameplay. Use Object Pooling for projectiles, enemies, and VFX. Avoid LINQ and excessive memory allocations in hot paths (like `Update`).
+- **Magic Numbers:** Do not hardcode values. Extract them into `[SerializeField]` variables or `private const` fields so they can be easily adjusted.
+
+## Naming Conventions
+- `PascalCase` for classes, structs, enums, methods, and properties.
+- `camelCase` for local variables and method parameters.
+- `_camelCase` for private and protected fields (e.g., `_moveSpeed`).
+- Prefix interfaces with `I` (e.g., `IDamageable`).
+
+## Documentation & Comments
+- **XML Summaries:** Use XML summary blocks (`/// <summary>`) for all public classes, interfaces, and public methods to explain their purpose and parameters.
+- **Inline Comments:** Use concise inline comments to explain *why* a specific approach was taken, not *what* the code is doing (the code should be self-documenting).
+- **Regions:** Use `#region` and `#endregion` to group logical sections of code (e.g., `#region Unity Callbacks`, `#region Public Methods`).
+
+## Response Formatting
+- When generating code, provide the complete, ready-to-use C# script.
+- Briefly explain the architectural choices or patterns used in the provided code.
+- Point out where variables can be tweaked in the Unity Inspector.

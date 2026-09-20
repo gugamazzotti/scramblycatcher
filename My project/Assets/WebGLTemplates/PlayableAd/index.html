@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+    <title>{{{ PRODUCT_NAME }}}</title>
+    <style>
+      html, body, #unity-container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        touch-action: none;
+        position: fixed;
+        inset: 0;
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+        background: #201338;
+      }
+      html, body {
+        height: 100%;
+        height: 100dvh;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+        outline: none;
+      }
+      #loading {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFF6E8;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        letter-spacing: 0.04em;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="unity-container">
+      <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
+      <div id="loading">Catching rewards…</div>
+    </div>
+    <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+    <script>
+      (function () {
+        var prevent = function (event) { event.preventDefault(); };
+        document.addEventListener("touchmove", prevent, { passive: false });
+        document.addEventListener("gesturestart", prevent, { passive: false });
+        document.addEventListener("gesturechange", prevent, { passive: false });
+        document.addEventListener("wheel", prevent, { passive: false });
+        document.addEventListener("contextmenu", prevent);
+
+        var canvas = document.querySelector("#unity-canvas");
+        var loading = document.querySelector("#loading");
+        canvas.style.background = "{{{ BACKGROUND_COLOR }}}";
+
+        createUnityInstance(canvas, {
+          dataUrl: "Build/{{{ DATA_FILENAME }}}",
+          frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+#if USE_THREADS
+          workerUrl: "Build/{{{ WORKER_FILENAME }}}",
+#endif
+#if USE_WASM
+          codeUrl: "Build/{{{ CODE_FILENAME }}}",
+#endif
+#if MEMORY_FILENAME
+          memoryUrl: "Build/{{{ MEMORY_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+          symbolsUrl: "Build/{{{ SYMBOLS_FILENAME }}}",
+#endif
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+          productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+          productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+          matchWebGLToCanvasSize: true,
+          devicePixelRatio: 1
+        }).then(function () {
+          if (loading) loading.style.display = "none";
+        }).catch(function (message) {
+          if (loading) loading.textContent = message;
+        });
+      })();
+    </script>
+  </body>
+</html>
